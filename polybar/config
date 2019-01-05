@@ -1,0 +1,377 @@
+[colors]
+background = #343d46
+background-alt = #2b303b
+foreground = #eff1f5
+foreground-alt = #eff1f5
+primary = #eff1f5
+secondary = #4f5b66
+green = #a3be8c
+alert = #bf616a
+
+[bar/dp0]
+;monitor = ${env:MONITOR:HDMI-0}
+monitor = ${env:MONITOR:DVI-I-1}
+width = 100%
+height = 26
+top= true
+fixed-center = true
+#radius = 6.0
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+border-size = 11
+border-bottom-size = 5
+border-top-size = 10
+
+line-size = 2
+line-color = ${colors.primary}
+
+padding-left = 1
+padding-right = 1
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-0 = Hack:pixelsize=10;1
+;Source Sans Pro:pixelsize=10;2
+font-1 = FontAwesome:pixelsize=11;2
+font-2 = DejaVu Sans:pixelsize=12;2
+
+modules-left = i3
+modules-center = mpd 
+modules-right = eth root home date 
+
+tray-position = right 
+tray-padding = 2 
+tray-detached = false
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+[bar/dp2]
+monitor = ${env:MONITOR:DVI-D-0}
+;monitor = ${env:MONITOR:HDMI-0}
+width = 100%
+height = 26
+top = true
+fixed-center = true
+#radius = 6.0
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+border-size = 11
+border-bottom-size = 5
+border-top-size = 10
+
+line-size = 2
+line-color = #eff1f5
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 1
+module-margin-right = 2
+
+font-1 = Hack:pixelsize=10;2
+;Source Sans Pro:pixelsize=12;2
+font-0 = FontAwesome:pixelsize=12;2
+font-2 = DejaVu Sans:pixelsize=12;2
+
+modules-center= updates-arch cpu memory temperature pkg git-status
+modules-left= i3
+modules-right = volume date
+
+scroll-up = i3wm-wsnext
+scroll-down = i3wm-wsprev
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:30:...%
+
+[module/xkeyboard]
+type = internal/xkeyboard
+blacklist-0 = num lock
+
+format-prefix = " "
+format-prefix-foreground = ${colors.foreground-alt}
+format-prefix-overline = ${colors.secondary}
+
+label-layout = %layout%
+label-layout-overline = ${colors.secondary}
+
+label-indicator-padding = 2
+label-indicator-margin = 1
+label-indicator-background = ${colors.secondary}
+label-indicator-overline = ${colors.secondary}
+
+[module/home]
+type = internal/fs
+interval = 25
+
+mount-0 = /home
+
+label-mounted =   %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+[module/root]
+type = internal/fs
+interval = 25
+
+mount-0 = /
+
+label-mounted =   %percentage_used%%
+label-unmounted = %mountpoint% not mounted
+label-unmounted-foreground = ${colors.foreground-alt}
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = true
+wrapping-scroll = false
+
+ws-icon-0 = 1;1:
+ws-icon-1 = 2;2:
+ws-icon-2 = 3;3: 
+ws-icon-3 = 4;4:
+ws-icon-4 = 5;5:
+ws-icon-5 = 6;6:
+ws-icon-6 = 7;7:
+ws-icon-7 = 8;8:
+ws-icon-default = 
+
+; Only show workspaces on the same output as the bar
+pin-workspaces = true
+
+label-mode-padding = 2
+label-mode-foreground = ${colors.background}
+label-mode-background = ${colors.primary}
+
+; focused = Active workspace on focused monitor
+label-focused = %icon%
+label-focused-background = ${colors.background-alt}
+label-focused-underline = ${colors.primary}
+label-focused-padding = 2
+
+; unfocused = Inactive workspace on any monitor
+label-unfocused = %icon%
+label-unfocused-padding = ${self.label-focused-padding}
+
+; visible = Active workspace on unfocused monitor
+label-visible = %icon%
+label-visible-background = ${colors.background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+
+; urgent = Workspace with urgency hint set
+label-urgent = %icon%
+label-urgent-padding = ${self.label-focused-padding}
+label-urgent-underline = ${colors.alert}
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label> <bar>
+label = BL
+
+bar-width = 10
+bar-indicator = |
+bar-indicator-foreground = #ff
+bar-indicator-font = 2
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = ${colors.green}
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = ${colors.primary}
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
+
+[module/updates-arch]
+type = custom/script
+exec = ~/.config/polybar-scripts/updates-arch.sh
+interval = 600
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground-alt}
+label = %percentage%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground-alt}
+label = %percentage_used%%
+
+[module/wlan]
+type = internal/network
+interface =
+interval = 3.0
+
+format-connected = <ramp-signal> <label-connected>
+format-connected-overline = #9f78e1
+label-connected = %essid%
+
+format-disconnected =
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-foreground = ${colors.foreground-alt}
+
+[module/eth]
+type = internal/network
+interface = enp0s31f6
+interval = 3.0
+
+format-connected-prefix = "  "
+label-connected =  %downspeed:9%   %upspeed:9%
+format-connected = <label-connected>
+
+format-disconnected-prefix = ${self.format-connected-prefix}
+format-disconnected = <label-disconnected>
+format-disconnected-overline = ${colors.alert}
+label-disconnected = DOWN
+
+[module/date]
+type = internal/date
+interval = 5
+
+date = "%Y-%m-%d "
+time = %H:%M
+
+format-prefix = "  "
+format-prefix-foreground = ${colors.foreground-alt}
+
+label = %date% %time%
+
+[module/volume]
+type = internal/volume
+
+format-volume = <label-volume> <bar-volume>
+label-volume = "  "
+label-volume-foreground = ${colors.primary}
+label-muted = ─────────
+format-muted-prefix = "  │"
+label-muted-foreground = ${colors.secondary}
+format-muted-foreground = ${colors.primary}
+
+bar-volume-width = 10
+bar-volume-foreground-0 = ${colors.primary}
+bar-volume-foreground-1 = ${colors.primary}
+bar-volume-foreground-2 = ${colors.primary}
+bar-volume-foreground-3 = ${colors.primary}
+bar-volume-foreground-4 = ${colors.primary}
+bar-volume-foreground-5 = ${colors.primary}
+bar-volume-foreground-6 = ${colors.alert}
+bar-volume-gradient = true
+bar-volume-indicator = │
+bar-volume-indicator-font = 2
+bar-volume-empty = ─
+bar-volume-fill-font = 2
+bar-volume-fill = ━  
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.secondary}
+
+[module/temperature]
+type = internal/temperature
+thermal-zone = 2
+warn-temperature = 60
+format-prefix = "  "
+format-prefix-foreground = ${colors.primary}
+format = <label>
+format-warn-prefix = ${self.format-prefix}
+format-warn = <label-warn>
+format-warn-overline = ${colors.alert}
+
+label = %temperature%
+label-warn = %temperature%
+label-warn-foreground = ${colors.primary}
+
+[module/powermenu]
+type = custom/menu
+
+format-spacing = 1
+
+label-open = " "
+label-open-foreground = ${colors.primary}
+label-close = " "
+label-close-foreground = ${colors.primary}
+label-separator = " "
+label-separator-foreground = ${colors.primary}
+
+menu-0-0 = " "
+menu-0-0-exec = menu-open-1
+menu-0-1 = " "
+menu-0-1-exec = menu-open-2
+
+menu-1-0 = " "
+menu-1-0-exec = menu-open-0
+menu-1-1 = " "
+menu-1-1-exec = sudo reboot now
+
+menu-2-0 = " "
+menu-2-0-exec = sudo shutdown -h now
+menu-2-1 = " "
+menu-2-1-exec = menu-open-0
+
+[settings]
+screenchange-reload = true
+
+[global/wm]
+margin-top = 5
+margin-bottom = 5
+
+[module/mpd]
+type = internal/mpd
+host = 127.0.0.1
+port = 6600
+interval = 2
+;label = %output:0:45:...%
+;exec = ~/.config/polybar-scripts/music.sh
+;click-left = playerctl play-pause
+;click-right = playerctl next
+;format-online = <label-song>
+;format-playing-underline = ${colors.underline}
+format-offline = <label-offline>
+label-offline = 🎜 mpd is offline
+label-song = 𝄞 %artist% - %title%
+
+;[module/mail]
+;type = custom/script
+;interval = 120
+;format = <label>
+;format-prefix = "  "
+;exec = ~/.config/polybar/mail
+
+;[module/pkg]
+;type = custom/script
+;interval = 1200
+;format = <label>
+;label = "%output:0:30%"
+;exec = .config/polybar/pkg.sh
+
+;[module/git-status]
+;type = custom/script
+;interval = 3600
+;format = <label>
+;format-prefix = " "
+;label = "%output:0:30%"
+;exec = uncommitted ~ &>/dev/null | grep ^/ &>/dev/null | tee >(wc -l) &>/dev/null
+
+; vim:ft=dosini
+
